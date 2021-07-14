@@ -254,7 +254,7 @@ module.exports = class StyleManager {
   }
 
   buildStylesElement() {
-    var stylesElement = new StylesElement();
+    const stylesElement = new StylesElement();
     stylesElement.initialize(this);
     return stylesElement;
   }
@@ -327,7 +327,6 @@ function transformDeprecatedShadowDOMSelectors(css, context) {
                 targetsAtomTextEditorShadow = true;
               }
             }
-
             previousNode = node;
             if (node.type === 'combinator') {
               previousNodeIsAtomTextEditor = false;
@@ -339,7 +338,7 @@ function transformDeprecatedShadowDOMSelectors(css, context) {
             }
           });
         });
-      }).process(rule.selector, { lossless: true }).result;
+      }).processSync(rule.selector, { lossless: true });
       if (transformedSelector !== rule.selector) {
         transformedSelectors.push({
           before: rule.selector,
@@ -348,6 +347,7 @@ function transformDeprecatedShadowDOMSelectors(css, context) {
         rule.selector = transformedSelector;
       }
     });
+
     let deprecationMessage;
     if (transformedSelectors.length > 0) {
       deprecationMessage =
